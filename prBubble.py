@@ -7,10 +7,14 @@ def moveVector(point, distance):
 
 #Defining a protein
 #ThOrigin: The protein will be shifted (random(-ThOrigin,ThOrigin), random(-ThOrigin,ThOrigin)) from its original coordinates.
+#type: type of template protein
+#ip: protein index used to create the ID
+#ib: bubble index used to create the ID
 
 class Protein:
-	def __init__(self, baseproteins, type, ThOrigin=100):		
+	def __init__(self, baseproteins, type, ip, ib, ThOrigin=100):		
 		self.type = type
+		self.id = "B" + str(ib) + "T" + str(type) + "P" + str(ip)
 		#self.ThOrigin = ThOrigin #should be removed from here
 		self.originshift = (random.uniform(-ThOrigin, ThOrigin), random.uniform(-ThOrigin, ThOrigin))
 		self.coords = [moveVector(x, self.originshift) for x in baseproteins[type]]
