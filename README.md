@@ -1,32 +1,38 @@
 # ProtoribosomeProject
 
-Installing Shapely (package to work with polygons, among other things)
+* Installing Shapely (package to work with polygons, among other things)
 
-First install GEOS library (SRC: http://geonode.readthedocs.org/en/2.0/tutorials/admin/install/install_postgis.html)
+** Install GEOS library (SRC: http://geonode.readthedocs.org/en/2.0/tutorials/admin/install/install_postgis.html)
 
-download the latest version from
+//These are the instructions that worked for me on Ubuntu 12.04. For 14.04 skip to 4)
+
+1) Download the latest version from
 
 http://trac.osgeo.org/geos/
 
-untar and in the new folder do:
+2) untar and in the new folder do:
 
 ./configure
+
 make
+
 sudo make install
 
-check version with
+3) check version with
 
 geos-config --version
 
-After that I had to do 
+4) After that I had to do:
 
 sudo apt-get install libgeos-dev
 
-Now Shapely
+** Now Shapely. 
+
+Usually you would do just:
 
 sudo pip install shapely
 
-//With the latest version there's a bug using GEOS. The version that worked for me is 1.4.3:
+But with the latest version there's a bug using GEOS. The version that worked for me is 1.4.3:
 
 sudo pip install "Shapely==1.4.3"
 
