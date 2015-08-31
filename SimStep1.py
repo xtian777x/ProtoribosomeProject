@@ -13,14 +13,14 @@ baseProteins = {1:[(10, 10), (10, 12), (15, 12), (14, 11)], 2:[(14, 11), (15, 12
 #matchingTypes contains, for each protein type, the types it can match to merge and form a new protein
 matchingTypes = {1:[2,5], 2:[1,3], 3:[2,4], 4:[3,5], 5:[4,1]}
 
-# 10 is the number of proteins and should be an input parameter
-bubble1 = [prBubble.Protein(baseProteins, random.randint(1,5), i, 1) for i in range(10)]
+# 100 is the number of proteins and should be an input parameter
+bubble1 = [prBubble.Protein(baseProteins, random.randint(1,5), i, 1) for i in range(100)]
 
 jfile = open('data.json', 'wa')
 jfile.write('[')
 
-# 10 steps simulation
-for i in range(10):
+# 200 steps simulation
+for i in range(200):
 	print "Run #" + str(i)
 	jdump = {}
 	jdata=[]
@@ -31,7 +31,8 @@ for i in range(10):
 		jdata.append({'id':protein.id, 'coords':protein.coords})
 	
 	jdump['data'] = jdata
-	jdump_string = json.dumps(jdump, sort_keys=True, indent=1)
+	#jdump_string = json.dumps(jdump, sort_keys=True, indent=1) #Human readable
+	jdump_string = json.dumps(jdump)
 	jfile.write(jdump_string+',')
 	#testing distances of all against all
 	print "Testing distances"
