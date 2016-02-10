@@ -10,6 +10,8 @@ def moveVector(point, distance):
 #type: type of template protein
 #ip: protein index used to create the ID
 #ib: bubble index used to create the ID
+#nature: could be O (original), H (hybrid) or D (dissociated)
+# We should have a 'structure' property which would be a list of joined proteins 
 
 class Protein:
 	def __init__(self, baseproteins, type, ip, ib, ThOrigin=100):		
@@ -18,6 +20,7 @@ class Protein:
 		#self.ThOrigin = ThOrigin #should be removed from here
 		self.originshift = (random.uniform(-ThOrigin, ThOrigin), random.uniform(-ThOrigin, ThOrigin))
 		self.coords = [moveVector(x, self.originshift) for x in baseproteins[type]]
+		self.nature = "O"
 
 	#Moving a whole protein structure
 	def move(self, vector):
