@@ -11,6 +11,7 @@ def moveVector(point, distance):
 #ip: protein index used to create the ID
 #ib: bubble index used to create the ID
 #nature: could be O (original), H (hybrid) or D (dissociated)
+#status: 1:active 0:inactive. The protein is inactive when it merged with another and one is discarded
 # We should have a 'structure' property which would be a list of joined proteins 
 
 class Protein:
@@ -21,6 +22,7 @@ class Protein:
 		self.originshift = (random.uniform(-ThOrigin, ThOrigin), random.uniform(-ThOrigin, ThOrigin))
 		self.coords = [moveVector(x, self.originshift) for x in baseproteins[type]]
 		self.nature = "O"
+		self.status = 1
 
 	#Moving a whole protein structure
 	def move(self, vector):
