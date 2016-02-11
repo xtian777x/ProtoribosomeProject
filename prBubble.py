@@ -13,6 +13,7 @@ def moveVector(point, distance):
 #nature: could be O (original), H (hybrid) or D (dissociated)
 #status: 1:active 0:inactive. The protein is inactive when it merged with another and one is discarded
 #baseTemplate: coordinates of the base protein(s) forming this protein. 0 = Original template found in baseProteins list.
+#allowedTypes: protein types missing to complete a cell wall
 # We should have a 'structure' property which would be a list of joined proteins 
 
 class Protein:
@@ -25,6 +26,7 @@ class Protein:
 		self.nature = "O"
 		self.status = 1
 		self.baseTemplate = 0
+		self.allowedTypes = filter(lambda a: a !=self.type, [1,2,3,4,5])
 
 	#Moving a whole protein structure
 	def move(self, vector):
