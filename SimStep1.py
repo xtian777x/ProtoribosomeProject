@@ -7,6 +7,8 @@ import itertools
 import json
 import os
 import re
+from shapely.ops import cascaded_union
+
 
 #baseProteins contains the basic protein templates
 baseProteins = {1:[(10, 10), (10, 12), (15, 12), (14, 11)], 2:[(14, 11), (15, 12), (16, 12), (16, 9), (13.5,9)], 3:[(13.5, 9), (16, 9), (16, 6), (13.8, 8)], 4:[(13.8, 8), (16, 6), (7, 6), (7, 7), (12, 7.2)], 5:[(7, 7), (12, 7.2), (10, 10), (10, 12), (7, 12)]}
@@ -43,9 +45,18 @@ for i in range(200):
 		#TODO: This proximity threshold should be an input parameter
 		if protA.dist(protB) < 50: 
 			if protB.type in matchingTypes[protA.type]:
+				#Get the ID of each protein
 				protAIndex = int(re.search('P([0-9]+)$',protA.id).group(1))
 				protBIndex = int(re.search('P([0-9]+)$',protB.id).group(1))
+
+				#Create a new protein from the base proteins using protA and protB types
+				newBaseProtein = list(cascaded_union([Polygon(baseProteins[protA.type]), Polygon(baseProteins[protB.type])]).exterior.coords)
+
+				#Compute the movement vector to position new base protein in the correct coordinates
+				movementVector = (protB.coords[0][0]-baseProteins[protB.type][0][0], protB.coords[0][1]-baseProteins[protB.type][0][1])
+
 				
+
 				print protA.id + " (type " +  str(protA.type) + ")" + " <-> " + protB.id + " (type " +  str(protB.type) + ")"
 jfile.seek(-1, os.SEEK_END)
 jfile.truncate()
