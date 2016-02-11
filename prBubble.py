@@ -12,7 +12,7 @@ def moveVector(point, distance):
 #ib: bubble index used to create the ID
 #nature: could be O (original), H (hybrid) or D (dissociated)
 #status: 1:active 0:inactive. The protein is inactive when it merged with another and one is discarded
-#baseTemplate: coordinates of the base protein(s) forming this protein
+#baseTemplate: coordinates of the base protein(s) forming this protein. 0 = Original template found in baseProteins list.
 # We should have a 'structure' property which would be a list of joined proteins 
 
 class Protein:
@@ -24,7 +24,7 @@ class Protein:
 		self.coords = [moveVector(x, self.originshift) for x in baseproteins[type]]
 		self.nature = "O"
 		self.status = 1
-		self.baseTemplate = []
+		self.baseTemplate = 0
 
 	#Moving a whole protein structure
 	def move(self, vector):
