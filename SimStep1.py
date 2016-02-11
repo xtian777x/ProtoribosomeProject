@@ -18,13 +18,13 @@ baseProteins = {1:[(10, 10), (10, 12), (15, 12), (14, 11)], 2:[(14, 11), (15, 12
 matchingTypes = {1:[2,5], 2:[1,3], 3:[2,4], 4:[3,5], 5:[4,1], 7:[]}
 
 #TODO: 100 is the number of proteins and should be an input parameter
-bubble1 = [prBubble.Protein(baseProteins, random.randint(1,5), i, 1) for i in range(100)]
+bubble1 = [prBubble.Protein(baseProteins, random.randint(1,5), i, 1) for i in range(200)]
 
 jfile = open('data.json', 'wa')
 jfile.write('[')
 
 #TODO 200 steps simulation. This should be an input parameter
-for i in range(200):
+for i in range(400):
 	print "Run #" + str(i)
 	jdump = {}
 	jdata=[]
@@ -32,7 +32,7 @@ for i in range(200):
 	# move each protein	
 	for protein in bubble1:		
 		#TODO: The movement max values should be an input parameter
-		protein.move((random.randint(-1,1), random.randint(-1,1)))
+		protein.move((random.randint(-2,2), random.randint(-2,2)))
 		jdata.append({'id':protein.id, 'coords':protein.coords,'status':protein.status})
 	
 	jdump['data'] = jdata
@@ -40,17 +40,41 @@ for i in range(200):
 	#jdump_string = json.dumps(jdump)
 	jfile.write(jdump_string+',')
 
-	# nearby proteins interacting
-	print "Interactions"
+	# nearby proteins interacting	
 	for protA,protB in itertools.combinations(bubble1,2):
 		#Checks if both proteins are active
 		if protA.status == 1 and protB.status == 1:
 			#TODO: This proximity threshold should be an input parameter
 			if protA.dist(protB) < 5: 
 				#Checks if proteins can match
-				print "protA type: " + str(protA.type)
-				print "protB type: " + str(protB.type)
-				if protB.type in matchingTypes[protA.type]:	
+				#print "protA type: " + str(protA.type)
+				#print "protB type: " + str(protB.type)
+
+				matchedTypes = False
+				#protB.type is int and protA.type is int
+				if type(protB.type) is int and type(protA.type) is int:					
+					if protB.type in matchingTypes[protA.type] and protA.type in protB.allowedTypes:
+						matchedTypes = True
+						newtype = [protB.type, protA.type]
+				#protB.type is list and protA.type is int
+				elif type(protB.type) is list and type(protA.type) is int and protA.type in protB.allowedTypes:					
+					if len(list(set(protB.type) & set(matchingTypes[protA.type]))) > 0:
+						matchedTypes = True
+						newtype = protB.type.append(protA.type)
+				#protB.type is int and protA.type is list
+				elif type(protB.type) is int and type(protA.type) is list and set(protA.type) <= set(protB.allowedTypes):					
+					for i in protA.type:
+						if protB.type in matchingTypes[i]:
+							matchedTypes = True
+							newtype = protA.type.append(protB.type)
+				#protB.type is list and protA.type is list
+				elif type(protB.type) is list and type(protA.type) is list and set(protA.type) <= set(protB.allowedTypes):					
+					for i in protA.type:
+						if len(list(set(protB.type) & set(matchingTypes[i]))) > 0:
+							matchedTypes = True
+							newtype = protB.type + protA.type
+
+				if matchedTypes:	
 					#Checks if template is simple or compound
 					if protA.baseTemplate == 0:
 						protATemplate = baseProteins[protA.type]
@@ -79,7 +103,13 @@ for i in range(200):
 					protB.id = protB.id + "-" + protA.id
 					#Update type
 					#protB.type = [protB.type, protA.type]
-					protB.type = 7
+					protB.type = newtype
+					#Updated allowed types
+					if type(protA.type) is int:
+						protB.allowedTypes = filter(lambda a: a !=protA.type, protB.allowedTypes)
+					elif type(protA.type) is list:
+						for i in protA.type:
+							protB.allowedTypes = filter(lambda a: a !=i, protB.allowedTypes)
 					#Update coordinates
 					protB.coords = newBaseProtein
 					#Move to correct position
