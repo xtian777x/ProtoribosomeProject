@@ -1,0 +1,134 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4319,        126]
+NotebookOptionsPosition[      4045,        112]
+NotebookOutlinePosition[      4385,        127]
+CellTagsIndexPosition[      4342,        124]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"rawdata", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{
+     RowBox[{"HomeDirectory", "[", "]"}], "<>", 
+     "\"\</playground/Ribosome/git/ProtoribosomeProject/data.json\>\""}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.664152116750403*^9, 3.664152149547449*^9}, {
+  3.665970968333316*^9, 3.665970970609284*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"coords", "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"MapThread", "[", 
+      RowBox[{"List", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"\"\<id\>\"", "/.", 
+           RowBox[{"(", 
+            RowBox[{"\"\<data\>\"", "/.", "#"}], ")"}]}], ")"}], ",", 
+         RowBox[{"(", 
+          RowBox[{"\"\<coords\>\"", "/.", 
+           RowBox[{"(", 
+            RowBox[{"\"\<data\>\"", "/.", "#"}], ")"}]}], ")"}], ",", 
+         RowBox[{"(", 
+          RowBox[{"\"\<status\>\"", "/.", 
+           RowBox[{"(", 
+            RowBox[{"\"\<data\>\"", "/.", "#"}], ")"}]}], ")"}]}], "}"}]}], 
+      "]"}], "&"}], "/@", "rawdata"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Graphics", "[", 
+    RowBox[{
+     RowBox[{"Flatten", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"u", ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+             "u", "\[LeftDoubleBracket]", "3", "\[RightDoubleBracket]"}], 
+             "\[Equal]", "1"}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"StringFreeQ", "[", 
+               RowBox[{
+                RowBox[{
+                "u", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+                ",", "\"\<-\>\""}], "]"}], ",", 
+              RowBox[{"List", "[", 
+               RowBox[{"Black", ",", 
+                RowBox[{"Tooltip", "[", 
+                 RowBox[{
+                  RowBox[{"Polygon", "[", 
+                   RowBox[{
+                   "u", "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], "]"}], ",", 
+                  RowBox[{
+                  "u", "\[LeftDoubleBracket]", "1", 
+                   "\[RightDoubleBracket]"}]}], "]"}]}], "]"}], ",", " ", 
+              RowBox[{"List", "[", 
+               RowBox[{"Red", ",", 
+                RowBox[{"Tooltip", "[", 
+                 RowBox[{
+                  RowBox[{"Polygon", "[", 
+                   RowBox[{
+                   "u", "\[LeftDoubleBracket]", "2", 
+                    "\[RightDoubleBracket]"}], "]"}], ",", 
+                  RowBox[{
+                  "u", "\[LeftDoubleBracket]", "1", 
+                   "\[RightDoubleBracket]"}]}], "]"}]}], "]"}]}], "]"}], ",", 
+            "Nothing"}], "]"}]}], "]"}], "/@", 
+        RowBox[{
+        "coords", "\[LeftDoubleBracket]", "x", "\[RightDoubleBracket]"}]}], 
+       ",", "1"}], "]"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", " ", "850"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", "1", ",", 
+     RowBox[{"Length", "[", "rawdata", "]"}], ",", "1"}], "}"}]}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.664155708856237*^9, 3.6641557500569143`*^9}, 
+   3.6641561869323597`*^9, 3.6641562353824377`*^9, {3.664158123002717*^9, 
+   3.664158123715311*^9}, 3.664158423477309*^9, {3.664158465414742*^9, 
+   3.6641584963714037`*^9}, {3.664168391767569*^9, 3.664168398976118*^9}, {
+   3.664168475955957*^9, 3.664168479825788*^9}, 3.665961062777521*^9}]
+},
+WindowSize->{1579, 894},
+WindowMargins->{{Automatic, 207}, {-8, Automatic}},
+FrontEndVersion->"10.4 for Linux x86 (64-bit) (February 25, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 359, 9, 32, "Input"],
+Cell[920, 31, 3121, 79, 121, "Input"]
+}
+]
+*)
+
