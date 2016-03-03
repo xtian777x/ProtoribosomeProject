@@ -33,7 +33,7 @@ for i in range(400):
 	for protein in bubble1:		
 		#TODO: The movement max values should be an input parameter
 		protein.move((random.randint(-2,2), random.randint(-2,2)))
-		jdata.append({'id':protein.id, 'coords':protein.coords,'status':protein.status})
+		jdata.append({'id':protein.id, 'coords':protein.coords,'status':protein.status,'type':protein.type})
 	
 	jdump['data'] = jdata
 	jdump_string = json.dumps(jdump, sort_keys=True, indent=1) #Human readable
@@ -60,13 +60,14 @@ for i in range(400):
 				elif type(protB.type) is list and type(protA.type) is int and protA.type in protB.allowedTypes:					
 					if len(list(set(protB.type) & set(matchingTypes[protA.type]))) > 0:
 						matchedTypes = True
-						newtype = protB.type.append(protA.type)
+						newtype = protB.type + [protA.type]
 				#protB.type is int and protA.type is list
 				elif type(protB.type) is int and type(protA.type) is list and set(protA.type) <= set(protB.allowedTypes):					
 					for i in protA.type:
 						if protB.type in matchingTypes[i]:
 							matchedTypes = True
-							newtype = protA.type.append(protB.type)
+							newtype = protA.type + [protB.type]
+							break
 				#protB.type is list and protA.type is list
 				elif type(protB.type) is list and type(protA.type) is list and set(protA.type) <= set(protB.allowedTypes):					
 					for i in protA.type:
